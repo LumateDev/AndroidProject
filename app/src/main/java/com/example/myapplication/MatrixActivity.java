@@ -5,7 +5,10 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -50,9 +53,10 @@ public class MatrixActivity extends AppCompatActivity {
         editText = new EditText[n][n];
         layoutHorizontal = new LinearLayout[n];
 
+
         if(layoutVertical.getChildCount()>0)
             layoutVertical.removeAllViewsInLayout();
-
+        int t = 0;
         for (int i = 0; i < n; i++) {
             layoutHorizontal[i]= new LinearLayout(this);
             layoutHorizontal[i].setOrientation(LinearLayout.HORIZONTAL);
@@ -61,8 +65,44 @@ public class MatrixActivity extends AppCompatActivity {
             for (int j = 0; j < n; j++) {
 
                 editText[i][j] = new EditText(this);
+
+                if (i+1 < n ) {
+                    editText[i][j].setId(i);
+                 
+                }
+                else if (i + 1 == n && j <n) {
+                    editText[i][j].setId(j);
+
+
+                } else
+                    editText[i][j].setId(n+1);
+
                 editText[i][j].setTextSize(25);
-                //editText[i][j].setMaxLines(1);
+                editText[i][j].setSingleLine();
+
+                editText[i][j].setInputType(InputType.TYPE_CLASS_TEXT |InputType.TYPE_CLASS_NUMBER  |
+                        InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+
+
+
+                editText[i][j].setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        if (actionId == 0 || actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+
+                            int current_id= v.getId();
+                            if(current_id < n){
+                                editText[current_id+1][current_id+1].requestFocus();
+                            }
+                            if (current_id == n)
+                                editText[n][current_id].requestFocus();
+                            else
+                                return false;
+                        }
+                        return false;
+                    }
+                });
 
                 layoutHorizontal[i].addView(editText[i][j]);
                 layoutHorizontal[i].setHorizontalGravity(1);
