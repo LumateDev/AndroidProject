@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SquareEqActivity">
+
+    <EditText
+        android:id="@+id/editTextNumberSignedA"
+        android:importantForAutofill="no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="13"
+        android:hint="@string/input_a"
+        android:digits=".-1234567890"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editTextNumberSignedB"
+        android:importantForAutofill="no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:ems="13"
+        android:hint="@string/input_b"
+        android:digits=".-1234567890"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumberSignedA"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/editTextNumberSignedC"
+        android:importantForAutofill="no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:ems="13"
+        android:hint="@string/input_c"
+        android:digits=".-1234567890"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumberSignedB"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/textViewDisk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:text="@string/label_disk"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumberSignedC"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textViewX1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:text="@string/label_x1"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDisk"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textViewX2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:text="@string/label_x2"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewX1"
+        tools:visibility="gone" />
+
+    <Button
+        android:id="@+id/buttonCalc"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/button_calc"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:onClick="Calculate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewX2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

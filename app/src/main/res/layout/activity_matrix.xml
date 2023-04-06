@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutConst"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/InputSizeEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="8dp"
+        android:ems="11"
+        android:hint="@string/inputSizeMatrix"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAcceptInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonAcceptInput"
+        android:onClick="drawableMatrix"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/Continue"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/layoutVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InputSizeEditText" />
+
+    <LinearLayout
+        android:id="@+id/layoutVertical"
+        android:layout_width="409dp"
+        android:layout_height="419dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="176dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAcceptInput"/>
+
+
+    <Button
+        android:id="@+id/buttonCalcDet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/calcDet"
+        android:onClick="calculateDet"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewResultDet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutVertical" />
+
+    <TextView
+        android:id="@+id/textViewResultDet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/det"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCalcDet" />
+</androidx.constraintlayout.widget.ConstraintLayout>

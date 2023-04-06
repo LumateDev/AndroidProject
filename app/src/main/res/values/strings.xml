@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Калькулятор мат приколов</string>
+    <string name="buttonSquareEq">Калькулятор квадратных уравнений</string>
+    <string name="buttonMatrix">Расчёт определителя матрицы</string>
+    <string name="input_a">Введите первый коэффициент</string>
+    <string name="input_b">Введите второй коэффициент</string>
+    <string name="input_c">Введите третий коэффициент</string>
+    <string name="label_disk">Дискриминант:</string>
+    <string name="label_x1">Первый корень: </string>
+    <string name="label_x2">Второй корень: </string>
+    <string name="one_x">Единственный корень: </string>
+    <string name="button_calc">Посчитать</string>
+    <string name="detLabel">Определитель:</string>
+    <string name="inputSizeMatrix">Введите порядок матрицы</string>
+    <string name="Continue">Продолжить</string>
+    <string name="calcDet">Вычислить определитель</string>
+    <string name="det">Определитель: </string>
+
+</resources>
