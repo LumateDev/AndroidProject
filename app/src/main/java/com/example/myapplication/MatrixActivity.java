@@ -1,12 +1,9 @@
 package com.example.myapplication;
 
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -16,6 +13,8 @@ import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+
 
 
 public class MatrixActivity extends AppCompatActivity {
@@ -38,10 +37,9 @@ public class MatrixActivity extends AppCompatActivity {
         textViewResultDet.setVisibility(View.GONE);
         buttonCalcDet.setVisibility(View.GONE);
 
-
     }
     private void findViews(){
-        layoutVertical = (LinearLayout) findViewById(R.id.layoutVertical);
+        layoutVertical = findViewById(R.id.layoutVertical);
         inputSize = findViewById(R.id.InputSizeEditText);
         selectSize = findViewById(R.id.buttonAcceptInput);
         textViewResultDet = findViewById(R.id.textViewResultDet);
@@ -49,59 +47,47 @@ public class MatrixActivity extends AppCompatActivity {
     }
 
     public void drawableMatrix(View view) {
+
         int n = Integer.parseInt(String.valueOf(inputSize.getText()));
         editText = new EditText[n][n];
+        ArrayList<EditText> editTexts = new ArrayList<>();
         layoutHorizontal = new LinearLayout[n];
-
 
         if(layoutVertical.getChildCount()>0)
             layoutVertical.removeAllViewsInLayout();
+
         int t = 0;
         for (int i = 0; i < n; i++) {
+
             layoutHorizontal[i]= new LinearLayout(this);
             layoutHorizontal[i].setOrientation(LinearLayout.HORIZONTAL);
             layoutVertical.addView(layoutHorizontal[i]);
 
             for (int j = 0; j < n; j++) {
-
                 editText[i][j] = new EditText(this);
-
-                if (i+1 < n ) {
-                    editText[i][j].setId(i);
-                 
-                }
-                else if (i + 1 == n && j <n) {
-                    editText[i][j].setId(j);
-
-
-                } else
-                    editText[i][j].setId(n+1);
-
-                editText[i][j].setTextSize(25);
+                editTexts.add(editText[i][j]);
+                t ++;
+                editText[i][j].setId(t);
+                editText[i][j].setTextSize(20);
                 editText[i][j].setSingleLine();
-
                 editText[i][j].setInputType(InputType.TYPE_CLASS_TEXT |InputType.TYPE_CLASS_NUMBER  |
                         InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                editText[i][j].setOnEditorActionListener((v, actionId, event) -> {
+                    if (actionId == 0 || actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
 
+                        int curentId = v.getId();
+                        if(curentId <= n*n - n){
+                            editTexts.get(curentId).requestFocus();
+                        } else if (curentId < n*n) {
 
+                            editTexts.get(curentId).requestFocus();
 
-                editText[i][j].setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-                    @Override
-                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        if (actionId == 0 || actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
-
-                            int current_id= v.getId();
-                            if(current_id < n){
-                                editText[current_id+1][current_id+1].requestFocus();
-                            }
-                            if (current_id == n)
-                                editText[n][current_id].requestFocus();
-                            else
-                                return false;
                         }
-                        return false;
+                         else{
+
+                            editText[n-1][n-1].requestFocus();}
                     }
+                    return false;
                 });
 
                 layoutHorizontal[i].addView(editText[i][j]);
@@ -128,5 +114,6 @@ public class MatrixActivity extends AppCompatActivity {
         textViewResultDet.setVisibility(View.VISIBLE);
         textViewResultDet.setText(getString(R.string.detLabel) + " " + determinant);
     }
+
 
 }
