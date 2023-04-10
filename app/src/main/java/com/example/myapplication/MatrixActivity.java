@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -48,71 +49,86 @@ public class MatrixActivity extends AppCompatActivity {
 
     public void drawableMatrix(View view) {
 
-        int n = Integer.parseInt(String.valueOf(inputSize.getText()));
-        editText = new EditText[n][n];
-        ArrayList<EditText> editTexts = new ArrayList<>();
-        layoutHorizontal = new LinearLayout[n];
+        String check = inputSize.getText().toString();
+        if (TextUtils.isEmpty(check))
+            inputSize.setError("Порядок матрицы должен быть целым числом");
+        else {
 
-        if(layoutVertical.getChildCount()>0)
-            layoutVertical.removeAllViewsInLayout();
+            int n = Integer.parseInt(String.valueOf(inputSize.getText()));
+            editText = new EditText[n][n];
+            ArrayList<EditText> editTexts = new ArrayList<>();
+            layoutHorizontal = new LinearLayout[n];
 
-        int t = 0;
-        for (int i = 0; i < n; i++) {
+            if(layoutVertical.getChildCount()>0)
+                layoutVertical.removeAllViewsInLayout();
 
-            layoutHorizontal[i]= new LinearLayout(this);
-            layoutHorizontal[i].setOrientation(LinearLayout.HORIZONTAL);
-            layoutVertical.addView(layoutHorizontal[i]);
+            int t = 0;
+            for (int i = 0; i < n; i++) {
 
-            for (int j = 0; j < n; j++) {
-                editText[i][j] = new EditText(this);
-                editTexts.add(editText[i][j]);
-                t ++;
-                editText[i][j].setId(t);
-                editText[i][j].setTextSize(20);
-                editText[i][j].setSingleLine();
-                editText[i][j].setInputType(InputType.TYPE_CLASS_TEXT |InputType.TYPE_CLASS_NUMBER  |
-                        InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
-                editText[i][j].setOnEditorActionListener((v, actionId, event) -> {
-                    if (actionId == 0 || actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+                layoutHorizontal[i]= new LinearLayout(this);
+                layoutHorizontal[i].setOrientation(LinearLayout.HORIZONTAL);
+                layoutVertical.addView(layoutHorizontal[i]);
 
-                        int curentId = v.getId();
-                        if(curentId <= n*n - n){
-                            editTexts.get(curentId).requestFocus();
-                        } else if (curentId < n*n) {
+                for (int j = 0; j < n; j++) {
+                    editText[i][j] = new EditText(this);
+                    editTexts.add(editText[i][j]);
+                    t ++;
+                    editText[i][j].setId(t);
+                    editText[i][j].setTextSize(20);
+                    editText[i][j].setSingleLine();
+                    editText[i][j].setInputType(InputType.TYPE_CLASS_TEXT |InputType.TYPE_CLASS_NUMBER  |
+                            InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                    editText[i][j].setOnEditorActionListener((v, actionId, event) -> {
+                        if (actionId == 0 || actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
 
-                            editTexts.get(curentId).requestFocus();
+                            int curentId = v.getId();
+                            if(curentId <= n*n - n){
+                                editTexts.get(curentId).requestFocus();
+                            } else if (curentId < n*n) {
 
+                                editTexts.get(curentId).requestFocus();
+
+                            }
+                            else{
+
+                                editText[n-1][n-1].requestFocus();}
                         }
-                         else{
+                        return false;
+                    });
 
-                            editText[n-1][n-1].requestFocus();}
-                    }
-                    return false;
-                });
+                    layoutHorizontal[i].addView(editText[i][j]);
+                    layoutHorizontal[i].setHorizontalGravity(1);
 
-                layoutHorizontal[i].addView(editText[i][j]);
-                layoutHorizontal[i].setHorizontalGravity(1);
+                }
             }
+            buttonCalcDet.setVisibility(View.VISIBLE);
         }
-        buttonCalcDet.setVisibility(View.VISIBLE);
 
     }
     @SuppressLint("SetTextI18n")
-    public void calculateDet(View view){
+    public void calculateDet(View view) {
         int n = Integer.parseInt(String.valueOf(inputSize.getText()));
-        double [][] matrix = new double[n][n];
-        for(int i = 0; i < n; i++){
+        double[][] matrix = new double[n][n];
+        for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++)
-                matrix[i][j] = Double.parseDouble(editText[i][j].getText().toString());
-        }
+                try {
+                    matrix[i][j] = Double.parseDouble(editText[i][j].getText().toString());
+                } catch (Exception ex) {
+                    editText[i][j].setError("Значение элемента некорректно");
+                }
+            }
 
-        DeterminantCalc deter = new DeterminantCalc(matrix);
-        BigDecimal det = deter.determinant();
+            DeterminantCalc deter = new DeterminantCalc(matrix);
+            BigDecimal det = deter.determinant();
 
-        String determinant = NumberFormat.getInstance().format(det);
+            String determinant = NumberFormat.getInstance().format(det);
 
-        textViewResultDet.setVisibility(View.VISIBLE);
-        textViewResultDet.setText(getString(R.string.detLabel) + " " + determinant);
+            textViewResultDet.setVisibility(View.VISIBLE);
+            textViewResultDet.setText(getString(R.string.detLabel) + " " + determinant);
+
+
+
+
     }
 
 
